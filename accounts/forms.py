@@ -1,15 +1,19 @@
 from django.contrib.auth import get_user_model
 from django.contrib.auth.models import User
+from django import forms
 
 
-class UserCrearteForm(User):
-
-	class Meta:
+class UserCreateForm(forms.ModelForm):
+	password = forms.CharField(widget=forms.PasswordInput())
+	print('reach forms')
+	class Meta():
+		model = User
 		fields = ('username','email','password','password')
-		model = get_user_model()
+		
 
-	def __init__(self,*args,**kwargs):
+	def __init__(self,*args,**kwargs): 
 		super().__init__(*args,**kwargs)
-		self.fields['username'].label = "Display Name"
+		self.fields['username'].label = "User Name"
 		self.fields['email'].label = "Email Address"
+		self.fields['password'].label = "Confirm Password"
 		
